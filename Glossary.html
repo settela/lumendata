@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lumendata Glossary</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #fefefe;
+      color: #333;
+    }
+    header {
+      background-color: #F15A29;
+      padding: 24px;
+      text-align: center;
+      color: #fff;
+      font-size: 34px;
+      font-weight: bold;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      padding: 20px;
+    }
+    .controls button {
+      padding: 15px 25px;
+      border: none;
+      background: #fff;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #333;
+      transition: all 0.3s ease;
+    }
+    .controls button.active,
+    .controls button:hover {
+        background-color: #d88339;
+        color: #fff;
+    }
+
+    .search-box {
+      display: flex;
+      justify-content: center;
+      padding: 10px 20px;
+    }
+    .search-box input {
+      width: 100%;
+      max-width: 600px;
+      padding: 12px 16px;
+      font-size: 16px;
+      border: 2px solid #FFE6D0;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .section-title {
+        margin: 40px 20px 10px;
+        font-size: 24px;
+        color: #F15A29;
+        font-weight: bold;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      width: 260px;
+      padding: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card a {
+      color: #F15A29;
+      font-weight: bold;
+      font-size: 18px;
+      text-decoration: none;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #555;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 600px) {
+
+     .controls button {
+       padding: 8px 14px;
+       font-size: 12px;
+       gap: 5px;
+        
+    }
+    header {
+        font-size: 24px;
+        padding: 16px;
+    }
+    .section-title {
+        font-size: 20px;
+        margin: 30px 16px 8px;
+    }
+    .search-box input {
+        font-size: 14px;
+        padding: 10px 14px;
+    }
+    .card {
+        padding: 16px;
+    }
+    .card a {
+        font-size: 16px;
+    }
+    .card p {
+        font-size: 13px;
+    }
+}
+    .no-results {
+      text-align: center;
+      color: #999;
+      font-style: italic;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Lumendata Glossary</header>
+
+  <!-- Controls -->
+  <div class="controls" id="alphabetNav">
+    <!-- Alphabet + 0-9 + Clear will be injected here -->
+  </div>
+
+  <!-- Search -->
+  <div class="search-box">
+    <input type="text" placeholder="Search Keywords..." id="searchInput">
+  </div>
+
+  <!-- Glossary Content -->
+  <div id="glossaryContent"></div>
+
+  <script>
+    const glossaryItems = [
+      { term: "Informatica Platinum Enterprise Partner​", desc: "We are proud holders of 173+ Informatica Certifications. We’re leading the single, largest Informatica MDM SaaS migration for a global cruise line", category: "Informatica", link: "//www.informatica.com/" },
+      { term: "Snowflake Premier Services Partner​", desc:"LumenData is a proud SI partner with Snowflake. Together we’ve enabled several large customers to modernize data warehousing, migrate their data to the cloud and grow their instances.", category: "Snowflake", link: "https://www.snowflake.com/en/" },
+      { term: "Reltio Consulting Services​", desc: "As a trusted Reltio Systems Integrator and Implementation Partner, we provide support with cloud master data management and continuous data quality & data governance.", category: "Reltio", link: "https://www.reltio.com/" },
+      { term: "Databricks Strategic Consulting Partner", desc: "As a proud and trusted Databricks Consulting Partner, we help you build, deploy, and implement flexible data architectures, democratize data, and enable self-service analytics.", category: "Databricks", link: "https://www.databricks.com/" },
+      { term: "Airflow", desc: "A platform to author, schedule, and monitor workflows.", category: "Data Engineering", link: "https://airflow.apache.org" },
+      { term: "Batch Processing", desc: "Processing large volumes of data at once.", category: "Data Processing", link: "#" },
+      { term: "Cloud-native architecture", desc: "Optimized for cloud environments.", category: "Architecture", link: "#" },
+      { term: "ETL", desc: "Extract, Transform, Load data operations.", category: "Data Processing", link: "#" },
+      { term: "Fivetran", desc: "Data integration platform.", category: "Data Integration", link: "https://fivetran.com" },
+      { term: "Kafka", desc: "A distributed streaming platform.", category: "Streaming", link: "https://kafka.apache.org" },
+      { term: "Looker", desc: "Business intelligence tool.", category: "BI Tools", link: "https://looker.com" },
+      { term: "AWS Glue", desc: "ETL service by AWS.", category: "Cloud Services", link: "https://aws.amazon.com/glue/" },
+      { term: "BigQuery", desc: "Google Cloud’s data warehouse.", category: "Cloud Services", link: "https://cloud.google.com/bigquery" },
+      { term: "Informatica", desc: "Enterprise data management.", category: "Data Management", link: "https://www.informatica.com" },
+      { term: "AI", desc: "Artificial Intelligence.", category: "Artificial Intelligence", link: "#" },
+      { term: "IDMC", desc: "Informatica Data Management Cloud.", category: "Data Management", link: "#" },
+      { term: "JSON", desc: "Lightweight data-interchange format.", category: "Data Formats", link: "#" },
+      { term: "Machine Learning", desc: "Enabling machines to learn from data.", category: "Artificial Intelligence", link: "#" },
+      { term: "0Auth", desc: "Authorization framework.", category: "Security", link: "#" },
+      { term: "360 Customer View", desc: "Unified customer view.", category: "Customer Data", link: "#" },
+      { term: "Lumendata", desc: "15+ years of expertise, SOC 2 Certified! Empower your business with LumenData's holistic data solutions, including cloud modernization, data engineering, and analytics. Contact today..", category: "Company profile", link: "https://lumendata.com/" },
+    ];
+  
+    const glossaryContent = document.getElementById("glossaryContent");
+    const alphabetNav = document.getElementById("alphabetNav");
+    const searchInput = document.getElementById("searchInput");
+  
+    const chars = ['0-9', ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i))];
+    let activeFilter = null;
+  
+    chars.forEach(char => {
+      const btn = document.createElement("button");
+      btn.textContent = char;
+      btn.addEventListener("click", () => {
+        setActive(btn);
+        filterGlossary(char);
+      });
+      alphabetNav.appendChild(btn);
+    });
+  
+    const clearBtn = document.createElement("button");
+    clearBtn.textContent = "Clear Filters";
+    clearBtn.style.backgroundColor = "#F15A29";
+    clearBtn.style.color = "#fff";
+    clearBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      setActive(null);
+      displayGlossary(glossaryItems, true); // grouped view
+    });
+    alphabetNav.appendChild(clearBtn);
+  
+    function setActive(btn) {
+      document.querySelectorAll(".controls button").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+    }
+  
+    function groupByCategory(items) {
+      const map = {};
+      items.forEach(item => {
+        const key = item.category;
+        if (!map[key]) map[key] = [];
+        map[key].push(item);
+      });
+      return map;
+    }
+  
+    function displayGlossary(items, groupByCat = true) {
+      glossaryContent.innerHTML = '';
+      if (items.length === 0) {
+        glossaryContent.innerHTML = `<p class="no-results">No matching terms found.</p>`;
+        return;
+      }
+  
+      if (groupByCat) {
+        const grouped = groupByCategory(items);
+        for (const category in grouped) {
+          const section = document.createElement('div');
+          section.innerHTML = `<h2 class="section-title">${category}</h2>`;
+          const container = document.createElement('div');
+          container.className = 'card-container';
+  
+          grouped[category].forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+              <a href="${item.link}" target="_blank">${item.term}</a>
+              <p>${item.desc}</p>
+            `;
+            container.appendChild(card);
+          });
+  
+          section.appendChild(container);
+          glossaryContent.appendChild(section);
+        }
+      } else {
+        const container = document.createElement('div');
+        container.className = 'card-container';
+        items.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <a href="${item.link}" target="_blank">${item.term}</a>
+            <p>${item.desc}</p>
+          `;
+          container.appendChild(card);
+        });
+        glossaryContent.appendChild(container);
+      }
+    }
+  
+    function filterGlossary(letter) {
+      if (letter === '0-9') {
+        const filtered = glossaryItems.filter(item => /^[0-9]/.test(item.term));
+        displayGlossary(filtered, false); // flat view
+      } else {
+        const filtered = glossaryItems.filter(item => item.term.charAt(0).toUpperCase() === letter);
+        displayGlossary(filtered, false); // flat view
+      }
+    }
+  
+    searchInput.addEventListener("input", (e) => {
+      const keyword = e.target.value.toLowerCase();
+      setActive(null);
+      const filtered = glossaryItems.filter(item =>
+        item.term.toLowerCase().includes(keyword) ||
+        item.desc.toLowerCase().includes(keyword) ||
+        item.category.toLowerCase().includes(keyword)
+      );
+      displayGlossary(filtered, true); // grouped view
+    });
+  
+    // Initial render
+    displayGlossary(glossaryItems, true);
+  </script>
+  
+</body>
+</html>
